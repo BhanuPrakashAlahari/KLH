@@ -137,6 +137,31 @@ export function Home() {
 
                             if (data.type === "content") {
                                 lastMsg.content = (lastMsg.content || "") + (data.content || "");
+                            } else if (data.type === "payment_initiation") {
+                                // 1. Signal the redirect in the UI
+                                lastMsg.content = (lastMsg.content || "") + "\n\n**Booking initiated! Redirecting to secure payment...**";
+                                setIsStreaming(false);
+
+                                // 2. Handle the PayU Redirect
+                                const { payu_payload } = data;
+                                if (payu_payload) {
+                                    setTimeout(() => {
+                                        const form = document.createElement("form");
+                                        form.method = "POST";
+                                        form.action = "https://test.payu.in/_payment";
+
+                                        Object.keys(payu_payload).forEach(key => {
+                                            const hiddenField = document.createElement("input");
+                                            hiddenField.type = "hidden";
+                                            hiddenField.name = key;
+                                            hiddenField.value = payu_payload[key];
+                                            form.appendChild(hiddenField);
+                                        });
+
+                                        document.body.appendChild(form);
+                                        form.submit();
+                                    }, 1500); // Slight delay for user to read the message
+                                }
                             } else if (data.type === "end" || data.type === "chat_end") {
                                 setIsStreaming(false);
                                 // Mark all flows as done when conversation ends
