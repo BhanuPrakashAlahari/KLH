@@ -15,6 +15,7 @@
     "@types/gsap": "^1.20.2",
     "autoprefixer": "10.4.27",
     "clsx": "^2.1.1",
+    "d3": "^7.9.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.34.3",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@tailwindcss/vite": "^4.2.1",
+    "@types/d3": "^7.4.3",
     "@types/node": "^24.10.1",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",

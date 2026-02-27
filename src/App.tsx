@@ -19,6 +19,7 @@ function App() {
               </ProtectedRoute>
             } />
             <Route path="/login" element={<Auth />} />
+            <Route path="/auth/google/callback" element={<Auth />} />
           </Routes>
         </main>
       </Router>
