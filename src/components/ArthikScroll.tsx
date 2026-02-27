@@ -166,8 +166,8 @@ const ArthikScroll: React.FC = () => {
     useEffect(() => {
         if (!imagesLoaded) return;
 
-        const slides = [".slide-1", ".slide-2", ".slide-3", ".slide-4", ".slide-5"];
-        slides.forEach((slide) => {
+        // Entrance Animations (Skip Slide 1 to keep it visible on load)
+        [".slide-2", ".slide-3", ".slide-4", ".slide-5"].forEach((slide) => {
             const h = `${slide} h1, ${slide} h2`;
             const p = `${slide} p, ${slide} span, ${slide} .tech-bar`;
 
@@ -187,7 +187,21 @@ const ArthikScroll: React.FC = () => {
                     scrollTrigger: { trigger: slide, start: "top 80%", end: "top 50%", scrub: 1 }
                 }
             );
+        });
 
+        // Exit Animation for Slide 1 (Special timing to stay visible initially)
+        gsap.to(".slide-1", {
+            opacity: 0, y: -60, filter: "blur(20px)",
+            scrollTrigger: {
+                trigger: ".slide-1",
+                start: "top -20%", // Delay exit until it moves up 20%
+                end: "top -60%",
+                scrub: 1
+            }
+        });
+
+        // Exit Animations (Remaining slides, excluding final slide)
+        [".slide-2", ".slide-3", ".slide-4"].forEach((slide) => {
             gsap.to(slide, {
                 opacity: 0, y: -60, filter: "blur(20px)",
                 scrollTrigger: { trigger: slide, start: "top 10%", end: "top -10%", scrub: 1 }
@@ -197,16 +211,24 @@ const ArthikScroll: React.FC = () => {
 
     return (
         <div ref={containerRef} className="relative w-full h-[900vh] bg-[#050505] selection:bg-white selection:text-black">
-            {/* Navbar / Login Button */}
-            <div className="fixed top-12 right-12 z-[70] flex items-center gap-8 pointer-events-auto">
-                <button
-                    onClick={() => navigate("/login")}
-                    className="text-white/40 text-[10px] tracking-[0.6em] uppercase hover:text-white transition-all duration-500 flex items-center gap-3 group"
-                >
-                    <div className="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-white transition-all duration-500" />
-                    Login
-                </button>
-            </div>
+            {/* Top Navigation Overlay */}
+            <header className="fixed top-0 inset-x-0 h-24 px-12 z-[70] flex items-center justify-between pointer-events-none">
+                <div className="flex items-center gap-4">
+                    <div className="text-white text-xl font-thin tracking-[0.8em] uppercase opacity-90 drop-shadow-2xl">
+                        Arthik
+                    </div>
+                </div>
+
+                <div className="flex items-center gap-8 pointer-events-auto">
+                    <button
+                        onClick={() => navigate("/login")}
+                        className="text-white/40 text-[10px] tracking-[0.6em] uppercase hover:text-white transition-all duration-500 flex items-center gap-3 group"
+                    >
+                        <div className="w-8 h-[1px] bg-white/20 group-hover:w-12 group-hover:bg-white transition-all duration-500" />
+                        Login
+                    </button>
+                </div>
+            </header>
 
             {/* Scroll Progress Bar */}
             <div className="fixed right-12 top-1/2 -translate-y-1/2 z-50 flex flex-col items-center gap-6">
@@ -257,8 +279,8 @@ const ArthikScroll: React.FC = () => {
                 <div className="absolute inset-x-0 bottom-0 h-[40vh] bg-gradient-to-t from-[#050505] to-transparent pointer-events-none z-10" />
             </div>
 
-            {/* Story Layers */}
-            <div className="relative z-20 pointer-events-none">
+            {/* Story Layers - Shifted up to align first slide with first frame */}
+            <div className="relative z-20 pointer-events-none -mt-[100vh]">
                 {/* Slide 1: Identity / Main Frame */}
                 <div className="h-screen flex items-center justify-center px-8 relative overflow-hidden">
                     {/* Background Text Accent */}
@@ -268,14 +290,14 @@ const ArthikScroll: React.FC = () => {
 
                     <div className="slide-1 text-center relative z-10">
                         <span className="text-white/20 text-sm tracking-[1.2em] uppercase mb-10 block font-light">Next-Gen Autonomous Concierge</span>
-                        <h1 className="text-9xl md:text-[14rem] font-thin text-white tracking-tighter mb-10 leading-none">
-                            Arthik <span className="opacity-30 italic">Global</span>
+                        <h1 className="text-9xl md:text-[14rem] font-bold text-white tracking-tighter mb-10 leading-none drop-shadow-2xl">
+                            Arthik <span className="opacity-70 italic font-light text-white/90">Global</span>
                         </h1>
                         <div className="tech-bar w-64 h-[2px] bg-gradient-to-r from-transparent via-white/30 to-transparent mx-auto mb-12" />
-                        <p className="text-2xl md:text-3xl text-white/40 tracking-[1.5em] uppercase font-light mb-8">
+                        <p className="text-2xl md:text-3xl text-white/80 tracking-[1.5em] uppercase font-bold mb-8 drop-shadow-md">
                             Intelligence in Motion
                         </p>
-                        <p className="max-w-2xl mx-auto text-white/20 text-lg font-light leading-relaxed tracking-wide">
+                        <p className="max-w-2xl mx-auto text-white/70 text-lg font-normal leading-relaxed tracking-wide drop-shadow-md">
                             Experience the world's first fully autonomous travel engine. Our neural agent
                             scours, negotiates, and secures premium stays tailored to your exact DNA.
                         </p>
@@ -291,11 +313,11 @@ const ArthikScroll: React.FC = () => {
                             LOC_REF: 40.7128° N <br /> STATUS: SCANNING...
                         </div>
                         <span className="text-white/40 text-xs tracking-[0.6em] uppercase mb-8 block font-medium">01. Autonomous Discovery</span>
-                        <h2 className="text-7xl md:text-8xl font-thin text-white tracking-tight mb-10 leading-tight">
-                            Meet Your <br /> <span className="italic opacity-50">Personal Agent.</span>
+                        <h2 className="text-7xl md:text-8xl font-bold text-white tracking-tight mb-10 leading-tight drop-shadow-2xl">
+                            Meet Your <br /> <span className="italic opacity-80 font-light">Personal Agent.</span>
                         </h2>
                         <div className="tech-bar w-64 h-[1px] bg-gradient-to-r from-white/30 to-transparent mb-12" />
-                        <p className="text-white/50 text-2xl font-light leading-relaxed mb-10">
+                        <p className="text-white/80 text-2xl font-medium leading-relaxed mb-10 drop-shadow-lg">
                             A sophisticated neural engine that understands
                             your nuances. Our agent negotiates with global
                             vendors in real-time to find your perfect match.
@@ -316,11 +338,11 @@ const ArthikScroll: React.FC = () => {
                             VNDR_SYNC: ACTIVE <br /> LATENCY: 12ms
                         </div>
                         <span className="text-white/40 text-xs tracking-[0.6em] uppercase mb-8 block font-medium">02. Dynamic Inventory</span>
-                        <h2 className="text-7xl md:text-8xl font-thin text-white tracking-tight mb-10 leading-tight">
-                            Real-Time <br /> <span className="italic opacity-50">Accuracy.</span>
+                        <h2 className="text-7xl md:text-8xl font-bold text-white tracking-tight mb-10 leading-tight drop-shadow-2xl">
+                            Real-Time <br /> <span className="italic opacity-80 font-light">Accuracy.</span>
                         </h2>
                         <div className="tech-bar w-64 h-[1px] bg-gradient-to-l from-white/30 to-transparent mb-12 ml-auto" />
-                        <p className="text-white/50 text-2xl font-light leading-relaxed">
+                        <p className="text-white/80 text-2xl font-medium leading-relaxed drop-shadow-lg">
                             No outdated data. Our agent talks directly
                             to vendor systems, ensuring facilities and
                             pricing are accurate to the exact second.
@@ -334,16 +356,16 @@ const ArthikScroll: React.FC = () => {
                 <div className="h-screen flex flex-col items-center justify-center px-8 text-center text-white">
                     <div className="slide-4 max-w-4xl">
                         <span className="text-white/30 text-xs tracking-[0.5em] uppercase mb-8 block">03. Seamless Settlement</span>
-                        <h2 className="text-7xl md:text-9xl font-extralight tracking-tighter mb-12">
+                        <h2 className="text-7xl md:text-9xl font-bold tracking-tighter mb-12 drop-shadow-2xl">
                             Effortless Booking.
                         </h2>
-                        <p className="text-white/40 text-2xl font-light mb-16 max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-white/90 text-2xl font-medium mb-16 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
                             Powered by secure PayU integration. Automatic PDF transactions
                             and ranking-based selection make travel frictionless.
                         </p>
                         <button
                             onClick={() => window.location.href = '/home'}
-                            className="group relative px-20 py-8 border border-white/10 text-white text-sm font-light uppercase tracking-[0.8em] overflow-hidden pointer-events-auto transition-all duration-700 hover:border-white hover:tracking-[1em] hover:bg-white hover:text-black">
+                            className="group relative px-20 py-8 border-2 border-white/40 text-white text-base font-bold uppercase tracking-[0.8em] overflow-hidden pointer-events-auto transition-all duration-700 hover:border-white hover:bg-white hover:text-black shadow-xl backdrop-blur-md bg-white/5">
                             Start Searching
                         </button>
                     </div>
@@ -354,19 +376,19 @@ const ArthikScroll: React.FC = () => {
                         <div className="mb-12 inline-block px-8 py-3 border border-white/20 rounded-full bg-white/5 backdrop-blur-xl">
                             <span className="text-white/80 text-[10px] tracking-[1em] uppercase font-medium">Ready to Begin?</span>
                         </div>
-                        <h2 className="text-8xl md:text-[11rem] font-thin tracking-tighter mb-16 leading-tight">
-                            Get <span className="opacity-40 italic">Started.</span>
+                        <h2 className="text-8xl md:text-[11rem] font-bold tracking-tighter mb-16 leading-tight drop-shadow-2xl">
+                            Get <span className="opacity-80 italic font-light">Started.</span>
                         </h2>
-                        <p className="text-white/30 text-2xl font-light mb-20 max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-white/90 text-2xl font-medium mb-20 max-w-2xl mx-auto leading-relaxed drop-shadow-lg">
                             Join the elite circle of travelers using autonomous intelligence.
                             Your personalized global journey starts here.
                         </p>
                         <button
                             onClick={() => window.location.href = '/home'}
-                            className="group relative px-28 py-12 border border-white/20 text-white text-sm font-light uppercase tracking-[1.2em] overflow-hidden pointer-events-auto transition-all duration-1000 hover:border-white hover:tracking-[1.5em] hover:bg-white hover:text-black shadow-[0_0_50px_rgba(255,255,255,0.1)]"
+                            className="group relative px-28 py-12 border-2 border-white/40 text-white text-base font-black uppercase tracking-[1.2em] overflow-hidden pointer-events-auto transition-all duration-1000 hover:border-white hover:bg-white hover:text-black shadow-2xl backdrop-blur-xl bg-white/10"
                         >
-                            <span className="relative z-10 font-bold">Enter Portal</span>
-                            <div className="absolute inset-0 bg-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-expo" />
+                            <span className="relative z-10">Enter Portal</span>
+                            <div className="absolute inset-0 bg-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-700 ease-in-out" />
                         </button>
                     </div>
                 </div>

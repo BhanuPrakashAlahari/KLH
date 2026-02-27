@@ -1,4 +1,5 @@
-import { Mail, Lock, Globe, User, ChevronRight } from "lucide-react";
+import { Mail, Lock, User, ChevronRight, ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import RotatingEarth from "./wireframe-dotted-globe";
 
 interface LoginFormProps {
@@ -22,29 +23,22 @@ export default function LoginForm({
     onSubmit,
     onGoogleLogin
 }: LoginFormProps) {
+    const navigate = useNavigate();
+
     return (
-        <div className="flex min-h-screen w-full bg-white font-sans overflow-hidden">
+        <div className="flex min-h-screen w-full  font-sans overflow-hidden relative">
+            {/* Back Button */}
+            <button
+                onClick={() => navigate("/")}
+                className="absolute top-8 left-8 p-3 rounded-full shadow-sm hover:shadow-md hover:bg-slate-50 transition-all z-50 group"
+            >
+                <ChevronLeft className="w-5 h-5 text-slate-600 group-hover:text-slate-900 group-hover:-translate-x-0.5 transition-all" />
+            </button>
             {/* Left Side: Interactive Globe Portal */}
             <div className="w-full hidden md:flex flex-col justify-center items-center bg-slate-50 relative overflow-hidden border-r border-slate-100">
                 <RotatingEarth width={600} height={600} className="z-10" />
 
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white/80 via-transparent to-transparent opacity-50" />
-                <div className="absolute bottom-20 left-20 z-20">
-                    <div className="flex items-center gap-3 mb-6">
-                        <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center">
-                            <Globe className="text-white w-5 h-5" />
-                        </div>
-                        <span className="text-slate-900 text-xl font-light tracking-[0.3em] uppercase">Arthik</span>
-                    </div>
-                    <h1 className="text-6xl text-slate-900 font-thin tracking-tight leading-tight">
-                        Global Neural <br />
-                        <span className="italic font-normal text-blue-500">Concierge.</span>
-                    </h1>
-                    <p className="mt-6 text-slate-400 text-sm tracking-[0.1em] uppercase max-w-sm leading-relaxed">
-                        Autonomous Travel Intelligence <br />
-                        Processing Nodes: 1.2M / SEC
-                    </p>
-                </div>
+
 
                 {/* Decorative Technical Grid */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
