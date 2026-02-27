@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import * as d3 from "d3"
-import worldDots from "./world-dots.json"
+import worldDots from "../../assets/data/world-dots.json"
 
 interface RotatingEarthProps {
     width?: number

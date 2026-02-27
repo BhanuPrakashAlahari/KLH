@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ArthikScroll from "./components/ArthikScroll";
-import { Home } from "./pages/Home";
-import { Auth } from "./pages/Auth";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import ArthikScroll from "./components/features/ArthikScroll";
+import { Home } from "./pages/Home/Home";
+import { Preferences } from "./pages/Preferences/Preferences";
+import { Auth } from "./pages/Auth/Auth";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { LanguageProvider } from "./context/LanguageContext";
-import "./App.css";
+import "./assets/styles/App.css";
 
 function App() {
   return (
@@ -16,6 +17,11 @@ function App() {
             <Route path="/home" element={
               <ProtectedRoute>
                 <Home />
+              </ProtectedRoute>
+            } />
+            <Route path="/preferences" element={
+              <ProtectedRoute>
+                <Preferences />
               </ProtectedRoute>
             } />
             <Route path="/login" element={<Auth />} />
