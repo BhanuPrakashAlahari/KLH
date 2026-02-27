@@ -54,7 +54,8 @@ export function Bookings() {
     }, [navigate]);
 
     const handleDownload = (bookingId: string) => {
-        window.open(`https://arthik-omega.vercel.app/booking/${bookingId}/download`, '_blank');
+        const baseUrl = import.meta.env.VITE_OMEGA_BACKEND_URL;
+        window.open(`${baseUrl}/booking/${bookingId}/download`, '_blank');
     };
 
     const getStatusStyles = (status: string) => {

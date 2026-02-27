@@ -148,7 +148,7 @@ export function Home() {
                                     setTimeout(() => {
                                         const form = document.createElement("form");
                                         form.method = "POST";
-                                        form.action = "https://test.payu.in/_payment";
+                                        form.action = import.meta.env.VITE_PAYU_URL;
 
                                         Object.keys(payu_payload).forEach(key => {
                                             const hiddenField = document.createElement("input");

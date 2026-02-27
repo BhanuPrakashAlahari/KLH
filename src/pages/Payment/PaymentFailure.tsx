@@ -41,13 +41,13 @@ const PaymentFailure: React.FC = () => {
                 </CardContent>
                 <CardFooter className="flex flex-col gap-3 px-8 pb-8">
                     <Button asChild className="w-full bg-white text-black hover:bg-zinc-200 h-12 text-base font-semibold transition-colors">
-                        <Link to="/" className="flex items-center justify-center gap-2">
+                        <Link to="/home" className="flex items-center justify-center gap-2">
                             <RefreshCcw className="w-4 h-4" />
                             Retry Booking
                         </Link>
                     </Button>
                     <Button asChild variant="ghost" className="w-full border border-zinc-800 text-zinc-300 hover:bg-zinc-900 h-12">
-                        <Link to="/" className="flex items-center justify-center gap-2">
+                        <Link to="/home" className="flex items-center justify-center gap-2">
                             <Home className="w-4 h-4" />
                             Back to Home
                         </Link>

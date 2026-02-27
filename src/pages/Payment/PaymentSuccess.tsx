@@ -9,8 +9,9 @@ const PaymentSuccess: React.FC = () => {
     const txnid = searchParams.get('txnid');
 
     const handleDownload = () => {
+        const baseUrl = import.meta.env.VITE_OMEGA_BACKEND_URL;
         if (txnid) {
-            window.open(`https://arthik-omega.vercel.app/booking/${txnid}/download`, '_blank');
+            window.open(`${baseUrl}/booking/${txnid}/download`, '_blank');
         }
     };
 
@@ -43,7 +44,7 @@ const PaymentSuccess: React.FC = () => {
                 </CardContent>
                 <CardFooter className="flex flex-col gap-3 px-8 pb-8">
                     <Button asChild className="w-full bg-emerald-600 text-white hover:bg-emerald-700 h-12 text-base font-semibold">
-                        <Link to="/" className="flex items-center justify-center gap-2">
+                        <Link to="/home" className="flex items-center justify-center gap-2">
                             Return to Home
                             <ArrowRight className="w-4 h-4" />
                         </Link>

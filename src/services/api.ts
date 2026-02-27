@@ -1,5 +1,6 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-const CHAT_BACKEND_URL = "https://sreecharan-desu-arthikbackend.hf.space";
+const OMEGA_BACKEND_URL = import.meta.env.VITE_OMEGA_BACKEND_URL;
+const CHAT_BACKEND_URL = BACKEND_URL; // Using the same base for now as per .env contents
 
 export const apiService = {
     async fetchUser(token: string) {
@@ -23,7 +24,7 @@ export const apiService = {
     },
 
     async fetchBookings(token: string) {
-        const response = await fetch(`${BACKEND_URL}/user/bookings`, {
+        const response = await fetch(`${OMEGA_BACKEND_URL}/user/bookings`, {
             headers: { "Authorization": `Bearer ${token}` }
         });
         if (!response.ok) throw new Error("Failed to fetch bookings");
